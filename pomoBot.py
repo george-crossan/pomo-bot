@@ -57,8 +57,13 @@ async def start_timer(ctx, time = None):
     await ctx.send(f"{ctx.author.mention}", embed=embed)
     #await ctx.send(f"{ctx.author.mention} Your countdown Has ended!")
     # play sound when timer ends
-    sound_file = 'duck.mp3'  # specify your sound file here
 
+    sound_file_duck = 'duck.mp3'  
+    sound_file_happycat = 'happycat.mp3'
+
+    all_sounds = [sound_file_duck, sound_file_happycat]
+    sound_file = random.choice(all_sounds)
+    
     await play_sound(ctx, sound_file)
 
 
