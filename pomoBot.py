@@ -2,8 +2,11 @@
 import asyncio
 import discord
 import os
+import urllib.parse 
+import random
 from dotenv import load_dotenv
 from discord.ext import commands
+from discord import Embed
 
 load_dotenv()
 TOKEN = os.getenv('TOKEN')
@@ -41,9 +44,21 @@ async def start_timer(ctx, time = None):
         if time == 0:
             break
         await asyncio.sleep(1)
-    await ctx.send(f"{ctx.author.mention} Your countdown Has ended!")
+        #cat delivering countdown message
+        message_text = "Your countdown Has ended!"
+        no_spaces = urllib.parse.quote(message_text) 
+
+        #defo a better way to do this ignore for now
+        randomyay = random.randint(1, 1000000)
+        cat_url = f"https://cataas.com/cat/says/{no_spaces}?{randomyay}"
+        embed = Embed()
+        embed.set_image(url=cat_url)
+        
+    await ctx.send(f"{ctx.author.mention}", embed=embed)
+    #await ctx.send(f"{ctx.author.mention} Your countdown Has ended!")
     # play sound when timer ends
     sound_file = 'duck.mp3'  # specify your sound file here
+
     await play_sound(ctx, sound_file)
 
 
@@ -63,6 +78,7 @@ async def play_sound(ctx, sound_file):
         await asyncio.sleep(0.5)
 
     await vc.disconnect()
+
 
 def main():
     bot.run(TOKEN)
