@@ -23,10 +23,10 @@ async def on_ready():
     print(f'We have logged in as {bot.user}')
 
 
-@bot.command(name='timer', help='Starts a timer for the specified number of seconds.')
+@bot.command(name='timer', help='Starts a timer for the specified number of minutes.')
 async def start_timer(ctx, time = None):
     if time is None:
-        await ctx.send('Please provide the time in seconds for the timer.')
+        await ctx.send('Please provide the time in minutes for the timer.')
         return
 
     try:
@@ -38,12 +38,12 @@ async def start_timer(ctx, time = None):
         await ctx.send('Please provide a valid integer for the timer.')
         return
 
-    await ctx.send(f'Timer started for {time} seconds!')
+    await ctx.send(f'Timer started for {time} minutes!')
     while True:
         time -= 1
         if time == 0:
             break
-        await asyncio.sleep(1)
+        await asyncio.sleep(60)
         #cat delivering countdown message
         message_text = "Your countdown Has ended!"
         no_spaces = urllib.parse.quote(message_text) 
@@ -55,7 +55,6 @@ async def start_timer(ctx, time = None):
         embed.set_image(url=cat_url)
         
     await ctx.send(f"{ctx.author.mention}", embed=embed)
-    #await ctx.send(f"{ctx.author.mention} Your countdown Has ended!")
     # play sound when timer ends
 
     sound_file_duck = 'duck.mp3'  
